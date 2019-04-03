@@ -1,19 +1,10 @@
 import timeit
 import numpy as np
 
-np.random.seed(42)
 
-a = np.random.randint(0, 999999999, 10000).tolist()
-x = int(np.random.randint(0, 999999999))
-print(x)
-
-b = np.random.randint(0, 100000, 10000).tolist()
-y = int(np.random.randint(0, 100000))
-print(y)
-
-
-def func1(list_, _sum):
-    """ Task 3a) """
+def func1():
+    list_ = list(np.random.randint(0, 9999, 1000))
+    _sum = int(np.random.randint(0, 9999))
     step = 0
     for elem1 in list_:
         for elem2 in list_:
@@ -23,8 +14,9 @@ def func1(list_, _sum):
     return False, step
 
 
-def func2(list_, _sum):
-    """ Task 3b) """
+def func2():
+    list_ = sorted(list(np.random.randint(0, 9999, 1000)))
+    _sum = int(np.random.randint(0, 9999))
     pos1 = 0
     pos2 = len(list_) - 1
     _ans = False
@@ -41,8 +33,9 @@ def func2(list_, _sum):
     return _ans, step
 
 
-def func3(list_, _sum):
-    """ Task 3c) """
+def func3():
+    list_ = list(np.random.randint(0, 9999, 1000))
+    _sum = int(np.random.randint(0, 9999))
     pos = 0
     _ans = False
     store = set()
@@ -59,16 +52,9 @@ def func3(list_, _sum):
 
 if __name__ == "__main__":
 
-    print(func1(a, x))
-    print(func2(sorted(a), x))
-    print(func3(a, x))
-    print(timeit.timeit("func1(a, x)", "from __main__ import func1, a, x", number=3))
-    print(timeit.timeit("func2(sorted(a), x)", "from __main__ import func2, a, x", number=3))
-    print(timeit.timeit("func3(a, x)", "from __main__ import func3, a, x", number=3))
-
-    print(func1(b, y))
-    print(func2(sorted(b), y))
-    print(func3(b, y))
-    print(timeit.timeit("func1(b, y)", "from __main__ import func1, b, y", number=3))
-    print(timeit.timeit("func2(sorted(b), y)", "from __main__ import func2, b, y", number=3))
-    print(timeit.timeit("func3(b, y)", "from __main__ import func3, b, y", number=3))
+    np.random.seed(42)
+    print(timeit.timeit("func1()", "from __main__ import func1", number=1000))
+    np.random.seed(42)
+    print(timeit.timeit("func2()", "from __main__ import func2", number=1000))
+    np.random.seed(42)
+    print(timeit.timeit("func3()", "from __main__ import func3", number=1000))
