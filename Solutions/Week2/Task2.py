@@ -34,7 +34,7 @@ def visualize(model, X, y, X_new=None, y_new=None):
     Z = model.predict(np.c_[xx.ravel(), yy.ravel()])
     Z = Z.reshape(xx.shape)
 
-    # add some random noise to the data for plotting purposes only so that overlapping point can be identified.
+    # add some random noise to the data for plotting purposes only so that overlapping points can be identified.
     noise = np.random.normal(0, 0.02, X.shape)
     X = X + noise
 

@@ -70,7 +70,7 @@ class Net(nn.Module):
             batch_labels = pred.eq(target.data)
             correct += batch_labels.sum()
         test_loss /= len(testloader.dataset)
-        acc = 100. * correct / len(testloader.dataset)
+        acc = 100. * float(correct) / len(testloader.dataset)
         print('\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.2f}%)\n'.format(test_loss, correct,
                                                                                      len(testloader.dataset), acc))
 
