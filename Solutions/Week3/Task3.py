@@ -104,7 +104,7 @@ if __name__ == "__main__":
     model = Net()
     print(model)
 
-    """ Task 3d) """
+    """ Task 3d)  """
     optimizer = torch.optim.SGD(model.parameters(), lr=0.01, momentum=0.5)
     criterion = nn.NLLLoss()
 
