@@ -10,7 +10,6 @@ from torch.autograd import Variable
 
 
 def plot_data(trainloader):
-    """ Task 3b) """
     idx = np.random.randint(low=0, high=trainloader.dataset.data.shape[0], size=16)
     fig = plt.figure(figsize=(10, 10))
     for i, i_idx in enumerate(idx):
@@ -23,7 +22,6 @@ def plot_data(trainloader):
 
 
 class Net(nn.Module):
-    """ Task 3c) """
     def __init__(self):
         super(Net, self).__init__()
         self.fc1 = nn.Linear(3 * 32 * 32, 512)
@@ -79,7 +77,6 @@ class Net(nn.Module):
 
 
 class Net2(Net):
-    """ Task 3c) """
     def __init__(self):
         super(Net2, self).__init__()
         self.conv1 = nn.Conv2d(in_channels=3, out_channels=16, kernel_size=5, stride=1, padding=0, dilation=1)
@@ -105,7 +102,6 @@ class Net2(Net):
 
 
 class Net3(Net):
-    """ Task 3c) """
     def __init__(self):
         super(Net3, self).__init__()
         self.conv1 = nn.Conv2d(in_channels=3, out_channels=16, kernel_size=5, stride=1, padding=2, dilation=1)
@@ -185,7 +181,7 @@ if __name__ == "__main__":
     if flags["plot"]:
         plot_data(trainloader)
 
-    model_type = "MLP"
+    model_type = "Res"
 
     if model_type == "MLP":
         device = "cpu"
