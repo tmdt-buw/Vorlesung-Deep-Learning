@@ -104,15 +104,29 @@ class Net2(Net):
 class Net3(Net):
     def __init__(self):
         super(Net3, self).__init__()
+
+        """ aehnlich wie CNN """
         self.conv1 = nn.Conv2d(in_channels=3, out_channels=16, kernel_size=5, stride=1, padding=2, dilation=1)
         self.conv2 = nn.Conv2d(in_channels=16, out_channels=16, kernel_size=5, stride=1, padding=2, dilation=1)
         self.pool1 = nn.MaxPool2d(kernel_size=2, stride=2)
+
+        """ Bottleneck Residual Block """
+        """ 
+            Der Bottleneck akzeptiert eine kleine Größe an Inputs (16 Filter) und lernt die Reräsentation mit
+            einem 3x3 Kernel auf 32 Filtern. Diese werden dann wieder auf 16 reduziert, sodass die Dimension
+            von Input und Output gleich sind und die Addition der Skip Connection gültig ist. Die BatchNorm Layer
+            sind eine bewährte Methode, die Größenordnungen der Repräsentationen zu stabilisieren, sodass die
+            Überlegungen aus Übung 7, Aufgabe 3 zur Größenordnung von Lambda=1 in Kombination mit der Annahme, dass
+            w aus [-1, 1] gültig ist.
+        """
         self.conv3 = nn.Conv2d(in_channels=16, out_channels=32, kernel_size=1, stride=1, padding=0, dilation=1)
         self.bnc3 = nn.BatchNorm2d(32)
         self.conv4 = nn.Conv2d(in_channels=32, out_channels=32, kernel_size=3, stride=1, padding=1, dilation=1)
         self.bnc4 = nn.BatchNorm2d(32)
         self.conv5 = nn.Conv2d(in_channels=32, out_channels=16, kernel_size=1, stride=1, padding=0, dilation=1)
         self.bnc5 = nn.BatchNorm2d(16)
+
+        """ Bottleneck Residual Block """
         self.pool2= nn.MaxPool2d(kernel_size=2, stride=2)
         self.conv6 = nn.Conv2d(in_channels=16, out_channels=64, kernel_size=1, stride=1, padding=0, dilation=1)
         self.bnc6 = nn.BatchNorm2d(64)
@@ -120,6 +134,7 @@ class Net3(Net):
         self.bnc7 = nn.BatchNorm2d(64)
         self.conv8 = nn.Conv2d(in_channels=64, out_channels=16, kernel_size=1, stride=1, padding=0, dilation=1)
         self.bnc8 = nn.BatchNorm2d(16)
+
         self.pool3 = nn.MaxPool2d(kernel_size=2, stride=2)
         self.dropout = nn.Dropout(p=0.5)
         self.fc1 = nn.Linear(16*4*4, 128)
@@ -131,31 +146,31 @@ class Net3(Net):
         x = self.pool1(x)
         identity = x
         x = F.relu(self.conv3(x))
-        x = self.bnc3(x)
+        # x = self.bnc3(x)
         x = F.relu(self.conv4(x))
-        x = self.bnc4(x)
+        # x = self.bnc4(x)
         x = F.relu(self.conv5(x))
-        x = self.bnc5(x)
+        # x = self.bnc5(x)
         x += identity
         x = self.pool2(x)
         identity = x
         x = F.relu(self.conv6(x))
-        x = self.bnc6(x)
+        # x = self.bnc6(x)
         x = F.relu(self.conv7(x))
-        x = self.bnc7(x)
+        # x = self.bnc7(x)
         x = F.relu(self.conv8(x))
-        x = self.bnc8(x)
+        # x = self.bnc8(x)
         x += identity
         x = self.pool3(x)
         x = x.view(-1, 16*4*4)
-        x = self.dropout(x)
+        # x = self.dropout(x)
         x = F.relu(self.fc1(x))
         x = F.log_softmax(self.fc2(x), dim=1)
         return x
 
 
 if __name__ == "__main__":
-
+    #
     flags = {"plot": False,
              "train": False,
              "test": True}
@@ -181,7 +196,7 @@ if __name__ == "__main__":
     if flags["plot"]:
         plot_data(trainloader)
 
-    model_type = "Res"
+    model_type = "CNN"
 
     if model_type == "MLP":
         device = "cpu"
