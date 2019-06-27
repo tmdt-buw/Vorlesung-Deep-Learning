@@ -338,7 +338,7 @@ if __name__ == "__main__":
                 all_losses.append(current_loss / plot_every)
                 current_loss = 0
 
-        torch.save(rnn.state_dict(), f"net_{model_type}.pt")
+        torch.save(rnn.state_dict(), f"rnn.pt")
 
         """
         Plotting the Results
@@ -348,7 +348,7 @@ if __name__ == "__main__":
         plt.plot(all_losses)
     
     if not flags["train"]:
-        rnn.load_state_dict(torch.load(f"net_{model_type}.pt"))
+        rnn.load_state_dict(torch.load(f"rnn.pt"))
         rnn.eval()
 
     """
