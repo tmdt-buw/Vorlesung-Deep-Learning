@@ -17,16 +17,16 @@ def val():
     h3 = rel(w3 * h2 + b3)
     ystar = w4 * h3 + b4
 
-    print(h1, h2, h3)
+    print('act', h1, h2, h3)
 
     return ystar
 
 
 def loss(ystar):
-    return (ystar - 2.0) ** 2
+    return (ystar - 4.0) ** 2
 
 
 ystar = val()
-print(ystar)
+print('pred', ystar)
 l = loss(ystar)
-print(l)
+print('loss', l)

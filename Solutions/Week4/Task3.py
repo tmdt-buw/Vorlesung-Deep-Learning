@@ -102,49 +102,51 @@ if __name__ == "__main__":
     testset = torchvision.datasets.MNIST(root='../Week3/data', train=False, download=True, transform=transform)
     testloader = torch.utils.data.DataLoader(testset, batch_size=32, shuffle=False, num_workers=4)
 
-    # """ Task 3a+b) """
-    # flags = {"train": False,
-    #          "test": False,
-    #          "plot": True}
-    #
-    # fractions = [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1]
-    # num_train_samples = trainloader.dataset.data.size()[0]
-    # if flags["train"]:
-    #     for fraction in fractions:
-    #         reduced_train_size = int(fraction*num_train_samples)
-    #         sample_idx_list = np.random.choice(np.arange(num_train_samples), size=reduced_train_size, replace=False)
-    #         batch_sampler = torch.utils.data.sampler.SubsetRandomSampler(sample_idx_list)
-    #         trainloader_reduced = torch.utils.data.DataLoader(trainset, sampler=batch_sampler, batch_size=64, num_workers=4)
-    #
-    #         model = Net()
-    #         optimizer = torch.optim.SGD(model.parameters(), lr=0.01, momentum=0.5)
-    #         criterion = nn.NLLLoss()
-    #         # train
-    #         model.train_net(criterion, optimizer, trainloader_reduced, 10)
-    #         torch.save(model.state_dict(), f"net_{fraction}.pt")
-    #
-    # if flags["test"]:
-    #     accs = []
-    #     accs_class = []
-    #     for fraction in fractions:
-    #         # test
-    #         model = Net()
-    #         model.load_state_dict(torch.load(f'net_{fraction}.pt'))
-    #         model.eval()
-    #         optimizer = torch.optim.SGD(model.parameters(), lr=0.01, momentum=0.5)
-    #         criterion = nn.NLLLoss()
-    #         acc, acc_class = model.test_net(criterion, testloader)
-    #         accs.append(acc)
-    #         accs_class.append(acc_class)
-    #
-    #     np.savetxt('accs.txt', accs)
-    #     np.savetxt('accs_class.txt', accs_class)
-    #
-    # if flags["plot"]:
-    #     accs = np.loadtxt("accs.txt")
-    #     accs_class = np.loadtxt("accs_class.txt")
-    #     plot_accs(fractions, accs, accs_class)
-    # quit()
+    """ Task 3a+b) """
+    flags = {"train": True,
+             "test": True,
+             "plot": True}
+
+    fractions = [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1]
+    num_train_samples = trainloader.dataset.data.size()[0]
+    if flags["train"]:
+        for fraction in fractions:
+            reduced_train_size = int(fraction*num_train_samples)
+            sample_idx_list = np.random.choice(np.arange(num_train_samples), size=reduced_train_size, replace=False)
+            batch_sampler = torch.utils.data.sampler.SubsetRandomSampler(sample_idx_list)
+            trainloader_reduced = torch.utils.data.DataLoader(trainset, sampler=batch_sampler, batch_size=64, num_workers=4)
+
+            model = Net()
+            print(model)
+            quit()
+            optimizer = torch.optim.SGD(model.parameters(), lr=0.01, momentum=0.5)
+            criterion = nn.NLLLoss()
+            # train
+            model.train_net(criterion, optimizer, trainloader_reduced, 10)
+            torch.save(model.state_dict(), f"net_{fraction}.pt")
+
+    if flags["test"]:
+        accs = []
+        accs_class = []
+        for fraction in fractions:
+            # test
+            model = Net()
+            model.load_state_dict(torch.load(f'net_{fraction}.pt'))
+            model.eval()
+            optimizer = torch.optim.SGD(model.parameters(), lr=0.01, momentum=0.5)
+            criterion = nn.NLLLoss()
+            acc, acc_class = model.test_net(criterion, testloader)
+            accs.append(acc)
+            accs_class.append(acc_class)
+
+        np.savetxt('accs.txt', accs)
+        np.savetxt('accs_class.txt', accs_class)
+
+    if flags["plot"]:
+        accs = np.loadtxt("accs.txt")
+        accs_class = np.loadtxt("accs_class.txt")
+        plot_accs(fractions, accs, accs_class)
+    quit()
 
     """ Task 3c) """
     flags = {"train": True,
