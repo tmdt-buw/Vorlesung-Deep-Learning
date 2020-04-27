@@ -13,8 +13,8 @@ def f_fibo_rec(n):
 
 
 if __name__ == "__main__":
-    fibos = f_fibo(5)
+    fibos = f_fibo(10)
     print(fibos)
 
-    fibos = f_fibo_rec(5)
+    fibos = f_fibo_rec(10)
     print(fibos)

@@ -96,10 +96,18 @@ def timeSince(since):
 class RNN(nn.Module):
     def __init__(self, input_size, hidden_size, output_size):
         super(RNN, self).__init__()
-        # ToDo: <INSERT CODE HERE>
+
+        self.hidden_size = hidden_size
+
+        self.i2h = nn.Linear(input_size + hidden_size, hidden_size)
+        self.i2o = nn.Linear(input_size + hidden_size, output_size)
+        self.softmax = nn.LogSoftmax(dim=1)
 
     def forward(self, input, hidden):
-        # ToDo: <INSERT CODE HERE>
+        combined = torch.cat((input, hidden), 1)
+        hidden = self.i2h(combined)
+        output = self.i2o(combined)
+        output = self.softmax(output)
         return output, hidden
 
     def initHidden(self):
@@ -159,12 +167,10 @@ if __name__ == "__main__":
     (for language and name in our case) are used for later extensibility.
     """
     print(findFiles('data/names/*.txt'))
-    quit()
 
     all_letters = string.ascii_letters + " .,;'"
     n_letters = len(all_letters)
     print(unicodeToAscii('Ślusàrski'))
-    quit()
 
     # Build the category_lines dictionary, a list of names per language
     category_lines = {}
@@ -181,8 +187,7 @@ if __name__ == "__main__":
     Now we have category_lines, a dictionary mapping each category (language) to a list of lines (names).
     We also kept track of all_categories (just a list of languages) and n_categories for later reference.
     """
-    print(category_lines['Italian'][:5])
-    quit()
+    print(len(category_lines['German']))
 
     """
     Turning Names into Tensors
@@ -197,7 +202,6 @@ if __name__ == "__main__":
     """
     print(letterToTensor('J'))
     print(lineToTensor('Jones').size())
-    quit()
 
     """
     Creating the Network
@@ -213,7 +217,6 @@ if __name__ == "__main__":
     # ToDo:     A schematic of the Network can be found here: https://i.imgur.com/Z2xbySO.png
     rnn = RNN(n_letters, n_hidden, n_categories)
     print(rnn)
-    quit()
 
     """ To run a step of this network we need to pass an input (in our case, the Tensor for the current letter) and a\
     previous hidden state (which we initialize as zeros at first). We’ll get back the output (probability of each language)
@@ -223,7 +226,6 @@ if __name__ == "__main__":
     hidden = torch.zeros(1, n_hidden)
     output, next_hidden = rnn(input, hidden)
     print(output)
-    quit()
 
     """
     For the sake of efficiency we don’t want to be creating a new Tensor for every step, so we will use lineToTensor instead
@@ -234,7 +236,6 @@ if __name__ == "__main__":
 
     output, next_hidden = rnn(input[0], hidden)
     print(output)
-    quit()
 
     """
     As you can see the output is a <1 x n_categories> Tensor, where every item is the likelihood of that category
@@ -248,7 +249,6 @@ if __name__ == "__main__":
     which we know to be a likelihood of each category. We can use Tensor.topk to get the index of the greatest value:
     """
     print(categoryFromOutput(output))
-    quit()
 
     """
     We will also want a quick way to get a training example (a name and its language):
@@ -265,7 +265,7 @@ if __name__ == "__main__":
     """
     # ToDo:     Chose an appropriate loss function. Remember the activation of the output layer of your network
     # ToDo:     and combine it with a loss function suitable for the classification problem.
-    criterion = ...
+    criterion = nn.NLLLoss()
 
     """
     Each loop of training will:
@@ -281,7 +281,7 @@ if __name__ == "__main__":
 
     # ToDo:     Find a good value for the learning rate. If you set this too high, it might explode.
     # ToDo:     If too low, it might not learn.
-    learning_rate = ...
+    learning_rate = 0.001
 
     """
     Now we just have to run that with a bunch of examples. Since the train function returns both the output and loss we can
@@ -293,7 +293,7 @@ if __name__ == "__main__":
     # ToDo:     parameters of the learning rate and the number of training iterations with provided plotting functions.
 
     # train
-    n_iters = ...
+    n_iters = 14000
     print_every = 5000
     plot_every = 1000
 
@@ -325,7 +325,7 @@ if __name__ == "__main__":
     """
     plt.figure()
     plt.plot(all_losses)
-    quit()
+    plt.show()
 
     """
     Evaluating the Results

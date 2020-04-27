@@ -157,7 +157,7 @@ class RNN(nn.Module):
 
 if __name__ == "__main__":
 
-    flags = {"train": True}
+    flags = {"train": False}
 
     # ToDo      Task 1a) Download the data from [1] and extract it to the current directory.
     # ToDo               [1] https://download.pytorch.org/tutorial/data.zip
@@ -193,8 +193,7 @@ if __name__ == "__main__":
     Now we have category_lines, a dictionary mapping each category (language) to a list of lines (names).
     We also kept track of all_categories (just a list of languages) and n_categories for later reference.
     """
-    print(category_lines['Italian'][:5])
-    
+    print(category_lines['German'][:10])
 
 
     """
@@ -403,9 +402,8 @@ if __name__ == "__main__":
     """
     # ToDo:     Use the network to predict the language of your own name.
     rnn.predict('Richard')
-    rnn.predict('Fabian')
-    rnn.predict('Max')
-    rnn.predict('Marijke')
-    rnn.predict('Pim')
-    rnn.predict('Rüdiger')
-    rnn.predict('Ruediger')
+    rnn.predict('Miguel')
+    rnn.predict('Jan')
+    rnn.predict('Moritz')
+    rnn.predict('Jost')
+    rnn.predict('Felix')
