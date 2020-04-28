@@ -19,7 +19,6 @@ def plot_hist(data, target):
     plt.tight_layout()
     plt.show()
 
-
 def plot_scatter(data, target):
     """ Task 1c) """
     fig = plt.figure(figsize=(10, 10))

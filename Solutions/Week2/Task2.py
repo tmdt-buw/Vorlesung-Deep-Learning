@@ -52,7 +52,7 @@ def visualize(model, X, y, X_new=None, y_new=None):
     for i_class in np.unique(y):
         plt.scatter(X[:, 0][y == i_class], X[:, 1][y == i_class],
                     s=64, c=colors[i_class], edgecolor='k',
-                    cmap=plt.cm.coolwarm, alpha=0.7,
+                    cmap=cmap, alpha=0.7,
                     label=iris['target_names'][i_class])
 
     if X_new is not None and y_new is not None:
@@ -80,8 +80,10 @@ if __name__ == "__main__":
 
     """ Task 2a) """
     X = iris.data
+    print(X.shape)
     pca = PCA(n_components=2)
     X_trans = pca.fit_transform(X)
+    print(X_trans.shape)
 
     """ Task 2b) """
     y = iris.target

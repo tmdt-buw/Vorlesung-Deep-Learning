@@ -77,7 +77,7 @@ class Net(nn.Module):
 
 if __name__ == "__main__":
 
-    """ Task 3a) """
+    """ a) """
     transform = transforms.Compose([torchvision.transforms.ToTensor(),
                                                 torchvision.transforms.Normalize((0.5,), (0.5,))])
     trainset = torchvision.datasets.MNIST(root='./data', train=True, download=True, transform=transform)
@@ -97,14 +97,14 @@ if __name__ == "__main__":
                                                                                  (trainloader.dataset.targets == i).sum(),
                                                                                  (testloader.dataset.targets == i).sum()))
 
-    """ Task 3b) """
+    """ b) """
     plot_data(trainloader)
 
-    """ Task 3c) """
+    """ c) """
     model = Net()
     print(model)
 
-    """ Task 3d)  """
+    """ d) """
     optimizer = torch.optim.SGD(model.parameters(), lr=0.01, momentum=0.5)
     criterion = nn.NLLLoss()
 
