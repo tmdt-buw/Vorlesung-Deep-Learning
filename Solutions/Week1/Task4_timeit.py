@@ -2,7 +2,7 @@ import timeit
 import numpy as np
 
 
-def func1():
+def func_3a():
     list_ = list(np.random.randint(0, 9999, 1000))
     _sum = int(np.random.randint(0, 9999))
     step = 0
@@ -14,7 +14,7 @@ def func1():
     return False, step
 
 
-def func2():
+def func_4a():
     list_ = sorted(list(np.random.randint(0, 9999, 1000)))
     _sum = int(np.random.randint(0, 9999))
     pos1 = 0
@@ -33,7 +33,7 @@ def func2():
     return _ans, step
 
 
-def func3():
+def func_4b():
     list_ = list(np.random.randint(0, 9999, 1000))
     _sum = int(np.random.randint(0, 9999))
     pos = 0
@@ -53,8 +53,8 @@ def func3():
 if __name__ == "__main__":
 
     np.random.seed(42)
-    print(timeit.timeit("func1()", "from __main__ import func1", number=1000))
+    print(timeit.timeit("func_3a()", "from __main__ import func_3a", number=1000))
     np.random.seed(42)
-    print(timeit.timeit("func2()", "from __main__ import func2", number=1000))
+    print(timeit.timeit("func_4a()", "from __main__ import func_4a", number=1000))
     np.random.seed(42)
-    print(timeit.timeit("func3()", "from __main__ import func3", number=1000))
+    print(timeit.timeit("func_4b()", "from __main__ import func_4b", number=1000))

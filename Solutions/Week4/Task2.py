@@ -1,4 +1,5 @@
 def val():
+
     def rel(x):
         return max(0, x)
 
@@ -6,7 +7,7 @@ def val():
     w1 = 0.25
     w2 = 0.5
     w3 = 0.75
-    w4 = 1.3
+    w4 = 3.3
     b1 = 1.0
     b2 = 0.25
     b3 = 0.25
